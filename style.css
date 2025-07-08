@@ -269,46 +269,96 @@ body.dark-theme {
 
 /* Mobile responsiveness */
 @media (max-width: 480px) {
-  .container {
+  body {
     padding: 10px;
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+  
+  .container {
+    padding: 5px;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
   
   .title {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
   }
   
   .zikir-btn {
-    width: 180px;
-    height: 180px;
+    width: 150px;
+    height: 150px;
   }
   
   .btn-text {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
   
   .counter-container {
-    flex-direction: column;
-    gap: 15px;
+    flex-direction: row;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  
+  .counter {
+    padding: 15px 10px;
+  }
+  
+  .counter-label {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+  }
+  
+  .counter-value {
+    font-size: 1.5rem;
+  }
+  
+  .current-zikir {
+    margin: 15px 0;
+    padding: 15px;
+  }
+  
+  #currentZikirText {
+    font-size: 1rem;
   }
   
   /* Mobil için buton konumlandırması */
   .controls {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 5px;
+    right: 5px;
     margin: 0;
+  }
+  
+  .control-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
   }
   
   .theme-toggle {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 5px;
+    left: 5px;
     margin: 0;
   }
   
-  /* Mobilde header margin artırıldı */
+  /* Mobilde header margin azaltıldı */
   .header {
-    margin: 80px 0 40px;
+    margin: 60px 0 20px;
+  }
+  
+  /* Zikir container margin azaltıldı */
+  .zikir-container {
+    margin: 20px 0;
   }
 }
 
