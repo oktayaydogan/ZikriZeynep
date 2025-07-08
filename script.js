@@ -234,13 +234,86 @@ function handleFirstInteraction() {
     if (!userInteracted) {
         userInteracted = true;
 
+        // Mobil tarayıcılar için ses dosyalarını hazırla
+        backgroundAudio.load();
+        
         // Arka plan müziğini otomatik başlat
         setTimeout(() => {
             if (!isBackgroundPlaying) {
-                toggleBackgroundMusic();
+                // Mobil için arka plan sesini zorla başlat
+                const playPromise = backgroundAudio.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        bgIcon.textContent = '🔊';
+                        isBackgroundPlaying = true;
+                        console.log('Arka plan müziği başlatıldı');
+                    }).catch(error => {
+                        console.log('Arka plan müziği başlatılamadı:', error);
+                        // Kullanıcıya manuel başlatma seçeneği sun
+                        showBackgroundMusicPrompt();
+                    });
+                }
             }
-        }, 500);
+        }, 100);
     }
+}
+
+// Arka plan müziği başlatma prompt'u
+function showBackgroundMusicPrompt() {
+    const message = document.createElement('div');
+    message.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--primary-green);
+        color: white;
+        padding: 20px;
+        border-radius: 15px;
+        z-index: 1000;
+        font-size: 16px;
+        text-align: center;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        max-width: 300px;
+    `;
+    message.innerHTML = `
+        <p style="margin-bottom: 15px;">Arka plan müziği için izin gerekli</p>
+        <button id="enableMusic" style="
+            background: var(--gold);
+            color: var(--primary-green);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 10px;
+        ">Müziği Başlat</button>
+        <button id="skipMusic" style="
+            background: transparent;
+            color: white;
+            border: 1px solid white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        ">Sessiz Devam Et</button>
+    `;
+    
+    document.body.appendChild(message);
+    
+    document.getElementById('enableMusic').addEventListener('click', () => {
+        backgroundAudio.play().then(() => {
+            bgIcon.textContent = '🔊';
+            isBackgroundPlaying = true;
+            document.body.removeChild(message);
+        }).catch(error => {
+            console.log('Manuel başlatma da başarısız:', error);
+        });
+    });
+    
+    document.getElementById('skipMusic').addEventListener('click', () => {
+        document.body.removeChild(message);
+    });
 }
 
 // İlk etkileşim dinleyicileri
