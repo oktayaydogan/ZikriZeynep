@@ -1,10 +1,11 @@
 {
     "name": "Zikr-i Zeynep",
-    "short_name": "Zikr-iZeynep",
+    "short_name": "Zikr-i Zeynep",
     "description": "A digital platform for the remembrance of Zeynep",
-    "start_url": "/",
+    "start_url": "/ZikriZeynep/index.html",
+    "scope": "/ZikriZeynep/",
     "display": "standalone",
-    "background_color": "#41056c",
-    "theme_color": "#41056c",
+    "background_color": "#25063a",
+    "theme_color": "#25063a",
     "orientation": "portrait"
 }
