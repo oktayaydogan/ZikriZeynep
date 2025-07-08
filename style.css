@@ -16,6 +16,13 @@
   --dark-primary: #41056c;
 }
 
+.petit-formal-script-regular {
+  font-family: "Petit Formal Script", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 * {
   margin: 0;
   padding: 0;
@@ -94,7 +101,7 @@ body.dark-theme {
 }
 
 .title {
-  font-family: 'Amiri', serif;
+  font-family: "Petit Formal Script", cursive;
   font-size: 2.5rem;
   color: var(--primary-green);
   margin-bottom: 10px;
@@ -107,6 +114,7 @@ body.dark-theme {
 }
 
 .subtitle {
+  font-family: "Amiri", serif;
   font-size: 1.2rem;
   color: var(--light-brown);
   font-weight: 300;
@@ -168,9 +176,10 @@ body.dark-theme {
 }
 
 .btn-text {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: var(--text-light);
+  font-family: "Petit Formal Script", cursive;
+  font-size: 3rem !important;
+  font-weight: 700;
+  color: var(--gold);
   z-index: 3;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
