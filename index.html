@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>Zeynep Zikir</title>
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+    <div class="container">
+        <!-- Arka plan kontrol butonu -->
+        <div class="controls">
+            <button
+                id="backgroundToggle"
+                class="control-btn"
+            >
+                <span id="bgIcon">🔊</span>
+            </button>
+        </div>
+
+        <!-- Başlık -->
+        <div class="header">
+            <h1 class="title">Zeynep Zikir</h1>
+            <p class="subtitle">Bugün de doyduk</p>
+        </div>
+
+        <!-- Ana zikir butonu -->
+        <div class="zikir-container">
+            <button
+                id="zikirButton"
+                class="zikir-btn"
+            >
+                <div class="btn-inner">
+                    <div class="islamic-pattern"></div>
+                    <span class="btn-text">Zikir</span>
+                    <div class="ripple"></div>
+                </div>
+            </button>
+        </div>
+
+        <!-- Zikir sayacı -->
+        <div class="counter-container">
+            <div class="counter">
+                <span class="counter-label">Bugünkü Zikir</span>
+                <span
+                    id="todayCounter"
+                    class="counter-value"
+                >0</span>
+            </div>
+            <div class="counter">
+                <span class="counter-label">Toplam Zikir</span>
+                <span
+                    id="totalCounter"
+                    class="counter-value"
+                >0</span>
+            </div>
+        </div>
+
+        <!-- Mevcut zikir göstergesi -->
+        <div class="current-zikir">
+            <span id="currentZikirText">Her dokunuş bir minnet</span>
+        </div>
+
+        <!-- Gece/Gündüz modu -->
+        <div class="theme-toggle">
+            <button
+                id="themeToggle"
+                class="control-btn"
+            >
+                <span id="themeIcon">🌙</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Audio elementleri -->
+    <audio
+        id="backgroundAudio"
+        loop
+    >
+        <source
+            src="sounds/background.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+
+    <!-- Zikir sesleri -->
+    <audio
+        id="zikir1"
+        preload="auto"
+    >
+        <source
+            src="sounds/zikir1.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+    <audio
+        id="zikir2"
+        preload="auto"
+    >
+        <source
+            src="sounds/zikir2.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+    <audio
+        id="zikir3"
+        preload="auto"
+    >
+        <source
+            src="sounds/zikir3.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+    <audio
+        id="zikir4"
+        preload="auto"
+    >
+        <source
+            src="sounds/zikir4.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+    <audio
+        id="zikir5"
+        preload="auto"
+    >
+        <source
+            src="sounds/zikir5.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+    <audio
+        id="zikir6"
+        preload="auto"
+    >
+        <source
+            src="sounds/zikir6.mp3"
+            type="audio/mpeg"
+        >
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
