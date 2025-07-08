@@ -21,19 +21,16 @@ const zikirSounds = [
 let isBackgroundPlaying = false;
 let todayCount = 0;
 let totalCount = 0;
-let isDarkTheme = false;
 let currentZikirIndex = 0;
 
 // DOM elementleri
 const zikirButton = document.getElementById('zikirButton');
 const backgroundToggle = document.getElementById('backgroundToggle');
-const themeToggle = document.getElementById('themeToggle');
 const backgroundAudio = document.getElementById('backgroundAudio');
 const todayCounter = document.getElementById('todayCounter');
 const totalCounter = document.getElementById('totalCounter');
 const currentZikirText = document.getElementById('currentZikirText');
 const bgIcon = document.getElementById('bgIcon');
-const themeIcon = document.getElementById('themeIcon');
 
 // LocalStorage'dan veri yükleme
 function loadData() {
@@ -48,17 +45,14 @@ function loadData() {
     }
 
     totalCount = parseInt(localStorage.getItem('totalCount')) || 0;
-    isDarkTheme = localStorage.getItem('darkTheme') === 'true';
 
     updateCounters();
-    updateTheme();
 }
 
 // Veri kaydetme
 function saveData() {
     localStorage.setItem('todayCount', todayCount.toString());
     localStorage.setItem('totalCount', totalCount.toString());
-    localStorage.setItem('darkTheme', isDarkTheme.toString());
     localStorage.setItem('zikirDate', new Date().toDateString());
 }
 
@@ -66,17 +60,6 @@ function saveData() {
 function updateCounters() {
     todayCounter.textContent = todayCount;
     totalCounter.textContent = totalCount;
-}
-
-// Tema güncelleme
-function updateTheme() {
-    if (isDarkTheme) {
-        document.body.classList.add('dark-theme');
-        themeIcon.textContent = '☀️';
-    } else {
-        document.body.classList.remove('dark-theme');
-        themeIcon.textContent = '🌙';
-    }
 }
 
 // Ripple efekti oluşturma
@@ -194,13 +177,6 @@ function showAudioPermissionMessage() {
     }, 3000);
 }
 
-// Tema değiştirme
-function toggleTheme() {
-    isDarkTheme = !isDarkTheme;
-    updateTheme();
-    saveData();
-}
-
 // Sayfa yüklendiğinde çalışacak fonksiyonlar
 function initializeApp() {
     loadData();
@@ -226,7 +202,6 @@ zikirButton.addEventListener('click', (e) => {
 });
 
 backgroundToggle.addEventListener('click', toggleBackgroundMusic);
-themeToggle.addEventListener('click', toggleTheme);
 
 // Touch events for mobile
 zikirButton.addEventListener('touchstart', (e) => {
@@ -250,9 +225,6 @@ document.addEventListener('keydown', (e) => {
     }
     if (e.code === 'KeyB') {
         toggleBackgroundMusic();
-    }
-    if (e.code === 'KeyT') {
-        toggleTheme();
     }
 });
 
