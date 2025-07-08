@@ -148,6 +148,9 @@ function playZikir() {
     setTimeout(() => {
         zikirButton.classList.remove('success-pulse');
     }, 500);
+    
+    // Dinamik yıldız ekle
+    addDynamicStar();
 }
 
 // Arka plan müziği toggle
@@ -228,7 +231,14 @@ themeToggle.addEventListener('click', toggleTheme);
 // Touch events for mobile
 zikirButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    createRipple(e.touches[0]);
+    // Touch event için özel ripple oluşturma
+    const touch = e.touches[0];
+    const mockEvent = {
+        currentTarget: e.currentTarget,
+        clientX: touch.clientX,
+        clientY: touch.clientY
+    };
+    createRipple(mockEvent);
     playZikir();
 });
 
@@ -280,8 +290,77 @@ document.addEventListener('visibilitychange', () => {
 // Sayfa kapatılırken veri kaydetme
 window.addEventListener('beforeunload', saveData);
 
+// Yıldızlar oluşturma
+function createStars() {
+    const starsContainer = document.getElementById('starsContainer');
+    const numberOfStars = 20;
+    
+    for (let i = 0; i < numberOfStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.innerHTML = '✨';
+        
+        // Rastgele pozisyon
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        
+        // Rastgele animasyon tipi
+        const animations = ['', 'floating', 'pulse'];
+        const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
+        if (randomAnimation) {
+            star.classList.add(randomAnimation);
+        }
+        
+        // Rastgele gecikme
+        star.style.animationDelay = Math.random() * 3 + 's';
+        
+        starsContainer.appendChild(star);
+    }
+}
+
+// Dinamik yıldız ekleme (zikir yapıldığında)
+function addDynamicStar() {
+    const starsContainer = document.getElementById('starsContainer');
+    const star = document.createElement('div');
+    star.className = 'star floating';
+    star.innerHTML = '⭐';
+    
+    // Butonun etrafında rastgele pozisyon
+    const zikirBtn = document.getElementById('zikirButton');
+    const rect = zikirBtn.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    // Buton etrafında 150px yarıçapında rastgele pozisyon
+    const angle = Math.random() * 2 * Math.PI;
+    const radius = 100 + Math.random() * 100;
+    const x = centerX + Math.cos(angle) * radius;
+    const y = centerY + Math.sin(angle) * radius;
+    
+    star.style.left = x + 'px';
+    star.style.top = y + 'px';
+    star.style.position = 'fixed';
+    star.style.fontSize = '16px';
+    star.style.zIndex = '5';
+    
+    // Özel animasyon
+    star.style.animation = 'float-twinkle 2s ease-out forwards';
+    
+    starsContainer.appendChild(star);
+    
+    // 2 saniye sonra yıldızı kaldır
+    setTimeout(() => {
+        if (starsContainer.contains(star)) {
+            starsContainer.removeChild(star);
+        }
+    }, 2000);
+}
+
 // Uygulama başlatma
-document.addEventListener('DOMContentLoaded', initializeApp);
+document.addEventListener('DOMContentLoaded', () => {
+    initializeApp();
+    createStars();
+});
 
 // Hata yakalama
 window.addEventListener('error', (e) => {
