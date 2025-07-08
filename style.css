@@ -291,18 +291,24 @@ body.dark-theme {
     gap: 15px;
   }
   
-  .controls, .theme-toggle {
-    position: relative;
-    top: 0;
-    margin-bottom: 20px;
-  }
-  
+  /* Mobil için buton konumlandırması */
   .controls {
-    text-align: right;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    margin: 0;
   }
   
   .theme-toggle {
-    text-align: left;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    margin: 0;
+  }
+  
+  /* Mobilde header margin artırıldı */
+  .header {
+    margin: 80px 0 40px;
   }
 }
 
