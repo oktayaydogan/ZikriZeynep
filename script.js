@@ -31,6 +31,7 @@ const todayCounter = document.getElementById('todayCounter');
 const totalCounter = document.getElementById('totalCounter');
 const currentZikirText = document.getElementById('currentZikirText');
 const bgIcon = document.getElementById('bgIcon');
+const clickSound = document.getElementById('clickSound');
 
 // LocalStorage'dan veri yükleme
 function loadData() {
@@ -89,6 +90,16 @@ function createRipple(event) {
 function vibrate() {
     if (navigator.vibrate) {
         navigator.vibrate(50);
+    }
+}
+
+// Click sesi çalma
+function playClickSound() {
+    if (clickSound) {
+        clickSound.currentTime = 0; // Sesi baştan başlat
+        clickSound.play().catch(error => {
+            console.log('Click sesi çalınamadı:', error);
+        });
     }
 }
 
@@ -188,6 +199,11 @@ function initializeApp() {
             sound.volume = 0.7;
         }
     });
+    
+    // Click sesinin volume ayarı
+    if (clickSound) {
+        clickSound.volume = 0.5;
+    }
 
     // Başlangıç mesajı
     setTimeout(() => {
@@ -197,6 +213,7 @@ function initializeApp() {
 
 // Event listeners
 zikirButton.addEventListener('click', (e) => {
+    playClickSound(); // Click sesi çal
     createRipple(e);
     playZikir();
 });
@@ -206,6 +223,7 @@ backgroundToggle.addEventListener('click', toggleBackgroundMusic);
 // Touch events for mobile
 zikirButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
+    playClickSound(); // Click sesi çal
     // Touch event için özel ripple oluşturma
     const touch = e.touches[0];
     const mockEvent = {
@@ -221,6 +239,7 @@ zikirButton.addEventListener('touchstart', (e) => {
 document.addEventListener('keydown', (e) => {
     if (e.code === 'Space' || e.code === 'Enter') {
         e.preventDefault();
+        playClickSound(); // Click sesi çal
         playZikir();
     }
     if (e.code === 'KeyB') {
