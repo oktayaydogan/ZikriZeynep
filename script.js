@@ -32,7 +32,7 @@ const bgIcon = document.getElementById('bgIcon');
 const clickSound = document.getElementById('clickSound');
 
 // LocalStorage'dan veri yükleme
-function loadData() {
+async function loadData() {
     // const today = new Date().toDateString();
     // const savedDate = localStorage.getItem('zikirDate');
 
@@ -44,8 +44,8 @@ function loadData() {
     // }
 
     // totalCount = parseInt(localStorage.getItem('totalCount')) || 0;
-    totalCount = getTotalClicks().count || 0; // API'den toplam tıklama sayısını al
-    todayCount = getTodayClicks().count || 0; // API'den bugünün tıklama sayısını al
+    totalCount = await getTotalClicks().count || 0; // API'den toplam tıklama sayısını al
+    todayCount = await getTodayClicks().count || 0; // API'den bugünün tıklama sayısını al
 
     updateCounters();
 }
