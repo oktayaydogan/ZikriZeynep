@@ -456,15 +456,11 @@ function showInstallButton() {
         installButton.className = 'control-btn install-btn';
         installButton.title = 'Uygulamayı Yükle';
         installButton.style.cssText = `
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
             animation: pulse 2s infinite;
         `;
 
         installButton.addEventListener('click', installPWA);
-        document.body.appendChild(installButton);
+        document.getElementById('pwaInstallButton').appendChild(installButton);
 
         // 10 saniye sonra gizle
         setTimeout(() => {
