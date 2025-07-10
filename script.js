@@ -452,12 +452,9 @@ function showInstallButton() {
     // Eğer zaten install button yoksa oluştur
     if (!installButton) {
         installButton = document.createElement('button');
-        installButton.innerHTML = '📱';
+        installButton.innerHTML = '<span style="filter: invert(1);">📱</span>';
         installButton.className = 'control-btn install-btn';
         installButton.title = 'Uygulamayı Yükle';
-        installButton.style.cssText = `
-            animation: pulse 2s infinite;
-        `;
 
         installButton.addEventListener('click', installPWA);
         document.getElementById('pwaInstallButton').appendChild(installButton);
