@@ -1,10 +1,9 @@
 const zikirTranslations = [
-    "Zeynep'e yaptığı yemekler için teşekkür ederim",
-    "Zeynep'in sağlığı için şükürler olsun",
-    "Zeynep'in başarısı için Allah'a hamd olsun",
-    "Zeynep'in hayatında huzur ve mutluluk dilerim",
-    "Zeynep'in geçmişi için af dilerim",
-    "Zeynep'in üzerine Allah'ın rahmeti ve bereketi olsun"
+    "Ellerine sağlık Zeynep, teşekkür ederiz.",
+    "Harika bir yemekti! Adeta göklere yükseldim!",
+    "Dünyada iki tane gül olsun biri kırmızı biri beyaz olsun, sen ölürsen kırmızı güller solsun, ben ölürsem beyaz güller kefenim olsun. Afiyet olsun.",
+    "Bu ne be kardeşim !? Bunları daha az lezzetli yapta başka yemeklerden de zevk alabilelim.",
+    "Ben az önce ne yedim ya !? Cennetten bir meyve mi yedim ne yedim !?"
 ];
 
 // Ses dosyaları
@@ -13,8 +12,7 @@ const zikirSounds = [
     document.getElementById('zikir2'),
     document.getElementById('zikir3'),
     document.getElementById('zikir4'),
-    document.getElementById('zikir5'),
-    document.getElementById('zikir6')
+    document.getElementById('zikir5')
 ];
 
 // Uygulama durumu
@@ -142,7 +140,7 @@ function playZikir() {
     setTimeout(() => {
         zikirButton.classList.remove('success-pulse');
     }, 500);
-    
+
     // Dinamik yıldız ekle
     addDynamicStar();
 }
@@ -199,7 +197,7 @@ function initializeApp() {
             sound.volume = 0.7;
         }
     });
-    
+
     // Click sesinin volume ayarı
     if (clickSound) {
         clickSound.volume = 0.5;
@@ -255,7 +253,7 @@ function handleFirstInteraction() {
 
         // Mobil tarayıcılar için ses dosyalarını hazırla
         backgroundAudio.load();
-        
+
         // Arka plan müziğini otomatik başlat
         setTimeout(() => {
             if (!isBackgroundPlaying) {
@@ -317,9 +315,9 @@ function showBackgroundMusicPrompt() {
             cursor: pointer;
         ">Sessiz Devam Et</button>
     `;
-    
+
     document.body.appendChild(message);
-    
+
     document.getElementById('enableMusic').addEventListener('click', () => {
         backgroundAudio.play().then(() => {
             bgIcon.textContent = '🔊';
@@ -329,7 +327,7 @@ function showBackgroundMusicPrompt() {
             console.log('Manuel başlatma da başarısız:', error);
         });
     });
-    
+
     document.getElementById('skipMusic').addEventListener('click', () => {
         document.body.removeChild(message);
     });
@@ -358,26 +356,26 @@ window.addEventListener('beforeunload', saveData);
 function createStars() {
     const starsContainer = document.getElementById('starsContainer');
     const numberOfStars = 20;
-    
+
     for (let i = 0; i < numberOfStars; i++) {
         const star = document.createElement('div');
         star.className = 'star';
         star.innerHTML = '✨';
-        
+
         // Rastgele pozisyon
         star.style.left = Math.random() * 100 + '%';
         star.style.top = Math.random() * 100 + '%';
-        
+
         // Rastgele animasyon tipi
         const animations = ['', 'floating', 'pulse'];
         const randomAnimation = animations[Math.floor(Math.random() * animations.length)];
         if (randomAnimation) {
             star.classList.add(randomAnimation);
         }
-        
+
         // Rastgele gecikme
         star.style.animationDelay = Math.random() * 3 + 's';
-        
+
         starsContainer.appendChild(star);
     }
 }
@@ -388,30 +386,30 @@ function addDynamicStar() {
     const star = document.createElement('div');
     star.className = 'star floating';
     star.innerHTML = '⭐';
-    
+
     // Butonun etrafında rastgele pozisyon
     const zikirBtn = document.getElementById('zikirButton');
     const rect = zikirBtn.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
-    
+
     // Buton etrafında 150px yarıçapında rastgele pozisyon
     const angle = Math.random() * 2 * Math.PI;
     const radius = 100 + Math.random() * 100;
     const x = centerX + Math.cos(angle) * radius;
     const y = centerY + Math.sin(angle) * radius;
-    
+
     star.style.left = x + 'px';
     star.style.top = y + 'px';
     star.style.position = 'fixed';
     star.style.fontSize = '16px';
     star.style.zIndex = '5';
-    
+
     // Özel animasyon
     star.style.animation = 'float-twinkle 2s ease-out forwards';
-    
+
     starsContainer.appendChild(star);
-    
+
     // 2 saniye sonra yıldızı kaldır
     setTimeout(() => {
         if (starsContainer.contains(star)) {

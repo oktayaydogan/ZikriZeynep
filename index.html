@@ -1,193 +1,109 @@
 <!DOCTYPE html>
 <html lang="tr">
 
-<head>
-    <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
-    >
-    <title>Zikr-i Zeynep</title>
-    <link
-        rel="manifest"
-        href="manifest.json"
-    >
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-    <link
-        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500&display=swap"
-        rel="stylesheet"
-    >
-    <link
-        href="https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap"
-        rel="stylesheet"
-    >
-</head>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<title>Zikr-i Zeynep</title>
+		<link rel="manifest" href="manifest.json">
+		<link rel="stylesheet" href="style.css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap" rel="stylesheet">
+	</head>
 
-<body class="dark-theme">
-    <!-- Yıldızlar container -->
-    <div
-        class="stars-container"
-        id="starsContainer"
-    ></div>
+	<body
+		class="dark-theme">
+		<!-- Yıldızlar container -->
+		<div class="stars-container" id="starsContainer"></div>
 
-    <div class="container">
-        <!-- Üst bölüm: Butonlar ve başlık -->
-        <div class="top-section">
-            <!-- Arka plan kontrol butonu -->
-            <div class="controls">
-                <button
-                    id="backgroundToggle"
-                    class="control-btn"
-                >
-                    <span id="bgIcon">🔊</span>
-                </button>
-            </div>
+		<div
+			class="container">
+			<!-- Üst bölüm: Butonlar ve başlık -->
+			<div
+				class="top-section">
+				<!-- Arka plan kontrol butonu -->
+				<div class="controls">
+					<button id="backgroundToggle" class="control-btn">
+						<span id="bgIcon">🔊</span>
+					</button>
+				</div>
 
 
-            <!-- Başlık -->
-            <div class="header">
-                <h1 class="title">Zikr-i Zeynep</h1>
-                <p class="subtitle">Bugün de doyduk</p>
-            </div>
-        </div>
+				<!-- Başlık -->
+				<div class="header">
+					<h1 class="title">Zikr-i Zeynep</h1>
+					<p class="subtitle">Bugün de doyduk</p>
+				</div>
+			</div>
 
-        <!-- Orta bölüm: Ana zikir butonu -->
-        <div class="middle-section">
-            <div class="zikir-container">
-                <button
-                    id="zikirButton"
-                    class="zikir-btn"
-                >
-                    <div class="btn-inner">
-                        <div class="islamic-pattern"></div>
-                        <span class="btn-text">Zikr-et</span>
-                        <div class="ripple"></div>
-                    </div>
-                </button>
-            </div>
-        </div>
+			<!-- Orta bölüm: Ana zikir butonu -->
+			<div class="middle-section">
+				<div class="zikir-container">
+					<button id="zikirButton" class="zikir-btn">
+						<div class="btn-inner">
+							<div class="islamic-pattern"></div>
+							<span class="btn-text">Zikr-et</span>
+							<div class="ripple"></div>
+						</div>
+					</button>
+				</div>
+			</div>
 
-        <!-- Alt bölüm: Sayaçlar ve metin -->
-        <div class="bottom-section">
-            <!-- Zikir sayacı -->
-            <div class="counter-container">
-                <div class="counter">
-                    <span class="counter-label">Bugünkü Zikir</span>
-                    <span
-                        id="todayCounter"
-                        class="counter-value"
-                    >0</span>
-                </div>
-                <div class="counter">
-                    <span class="counter-label">Toplam Zikir</span>
-                    <span
-                        id="totalCounter"
-                        class="counter-value"
-                    >0</span>
-                </div>
-            </div>
+			<!-- Alt bölüm: Sayaçlar ve metin -->
+			<div
+				class="bottom-section">
+				<!-- Zikir sayacı -->
+				<div class="counter-container">
+					<div class="counter">
+						<span class="counter-label">Bugünkü Zikir</span>
+						<span id="todayCounter" class="counter-value">0</span>
+					</div>
+					<div class="counter">
+						<span class="counter-label">Toplam Zikir</span>
+						<span id="totalCounter" class="counter-value">0</span>
+					</div>
+				</div>
 
-            <!-- Mevcut zikir göstergesi -->
-            <div class="current-zikir">
-                <span id="currentZikirText">Her dokunuş bir minnet</span>
-            </div>
-        </div>
-    </div>
+				<!-- Mevcut zikir göstergesi -->
+				<div class="current-zikir">
+					<span id="currentZikirText">Her dokunuş bir minnet</span>
+				</div>
+			</div>
+		</div>
 
-    <!-- Audio elementleri -->
-    <audio
-        id="backgroundAudio"
-        loop
-        preload="auto"
-        playsinline
-        webkit-playsinline
-    >
-        <source
-            src="sounds/background.mp3"
-            type="audio/mpeg"
-        >
-    </audio>
+		<!-- Audio elementleri -->
+		<audio id="backgroundAudio" loop preload="auto" playsinline webkit-playsinline>
+			<source src="sounds/background.mp3" type="audio/mpeg">
+		</audio>
 
-    <!-- Zikir sesleri -->
-    <audio
-        id="zikir1"
-        preload="auto"
-    >
-        <source
-            src="sounds/zikir1.mp3"
-            type="audio/mpeg"
-        >
-    </audio>
-    <audio
-        id="zikir2"
-        preload="auto"
-    >
-        <source
-            src="sounds/zikir2.mp3"
-            type="audio/mpeg"
-        >
-    </audio>
-    <audio
-        id="zikir3"
-        preload="auto"
-    >
-        <source
-            src="sounds/zikir3.mp3"
-            type="audio/mpeg"
-        >
-    </audio>
-    <audio
-        id="zikir4"
-        preload="auto"
-    >
-        <source
-            src="sounds/zikir4.mp3"
-            type="audio/mpeg"
-        >
-    </audio>
-    <audio
-        id="zikir5"
-        preload="auto"
-    >
-        <source
-            src="sounds/zikir5.mp3"
-            type="audio/mpeg"
-        >
-    </audio>
-    <audio
-        id="zikir6"
-        preload="auto"
-    >
-        <source
-            src="sounds/zikir6.mp3"
-            type="audio/mpeg"
-        >
-    </audio>
+		<!-- Zikir sesleri -->
+		<audio id="zikir1" preload="auto">
+			<source src="sounds/ses1.mp3" type="audio/mpeg">
+		</audio>
+		<audio id="zikir2" preload="auto">
+			<source src="sounds/ses2.mp3" type="audio/mpeg">
+		</audio>
+		<audio id="zikir3" preload="auto">
+			<source src="sounds/ses3.mp3" type="audio/mpeg">
+		</audio>
+		<audio id="zikir4" preload="auto">
+			<source src="sounds/ses4.mp3" type="audio/mpeg">
+		</audio>
+		<audio id="zikir5" preload="auto">
+			<source src="sounds/ses5.mp3" type="audio/mpeg">
+		</audio>
+		<audio id="zikir6" preload="auto">
+			<source src="sounds/ses6.mp3" type="audio/mpeg">
+		</audio>
 
-    <!-- Click sesi -->
-    <audio
-        id="clickSound"
-        preload="auto"
-    >
-        <source
-            src="sounds/click.mp3"
-            type="audio/mpeg"
-        >
-    </audio>
+		<!-- Click sesi -->
+		<audio id="clickSound" preload="auto">
+			<source src="sounds/click.mp3" type="audio/mpeg">
+		</audio>
 
-    <script src="script.js"></script>
-</body>
+		<script src="script.js"></script>
+	</body>
 
 </html>
