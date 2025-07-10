@@ -159,6 +159,7 @@ function toggleBackgroundMusic() {
         });
         bgIcon.textContent = '🔊';
         isBackgroundPlaying = true;
+        backgroundAudio.volume = 0.5; // Mobil için ses kısma
     }
 }
 
