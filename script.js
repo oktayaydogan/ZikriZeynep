@@ -446,7 +446,7 @@ if ('serviceWorker' in navigator) {
 }
 
 // API URL'ini tanımla
-const API_URL = 'http://localhost:3000';
+const API_URL = 'https://cqathmzdgbsvxxnkwolu.supabase.co';
 
 // Bugünün tıklama sayısını getir
 async function getTodayClicks() {
