@@ -44,8 +44,8 @@ function loadData() {
     // }
 
     // totalCount = parseInt(localStorage.getItem('totalCount')) || 0;
-    totalCount = getTotalClicks() || 0; // API'den toplam tıklama sayısını al
-    todayCount = getTodayClicks() || 0; // API'den bugünün tıklama sayısını al
+    totalCount = getTotalClicks().count || 0; // API'den toplam tıklama sayısını al
+    todayCount = getTodayClicks().count || 0; // API'den bugünün tıklama sayısını al
 
     updateCounters();
 }
