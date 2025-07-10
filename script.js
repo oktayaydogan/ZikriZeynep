@@ -32,30 +32,43 @@ const bgIcon = document.getElementById('bgIcon');
 const clickSound = document.getElementById('clickSound');
 
 // LocalStorage'dan veri yükleme
-async function loadData() {
-    // const today = new Date().toDateString();
-    // const savedDate = localStorage.getItem('zikirDate');
+function loadData() {
+    const today = new Date().toDateString();
+    const savedDate = localStorage.getItem('zikirDate');
 
-    // if (savedDate === today) {
-    //     todayCount = parseInt(localStorage.getItem('todayCount')) || 0;
-    // } else {
-    //     todayCount = 0;
-    //     localStorage.setItem('zikirDate', today);
-    // }
+    if (savedDate === today) {
+        todayCount = parseInt(localStorage.getItem('todayCount')) || 0;
+    } else {
+        todayCount = 0;
+        localStorage.setItem('zikirDate', today);
+    }
 
-    // totalCount = parseInt(localStorage.getItem('totalCount')) || 0;
-    totalCount = await getTotalClicks().count || 0; // API'den toplam tıklama sayısını al
-    todayCount = await getTodayClicks().count || 0; // API'den bugünün tıklama sayısını al
+    totalCount = parseInt(localStorage.getItem('totalCount')) || 0;
 
     updateCounters();
 }
 
+async function fetchClickCounts() {
+    try {
+        const todayClicks = await getTodayClicks();
+        const totalClicks = await getTotalClicks();
+        todayCount = todayClicks;
+        totalCount = totalClicks;
+        updateCounters();
+    } catch (error) {
+        console.error('Tıklama sayıları alınamadı:', error);
+        // Varsayılan değerler kullan
+        todayCount = 0;
+        totalCount = 0;
+        updateCounters();
+    }
+}
+
 // Veri kaydetme
 function saveData() {
-    // localStorage.setItem('todayCount', todayCount.toString());
-    // localStorage.setItem('totalCount', totalCount.toString());
-    // localStorage.setItem('zikirDate', new Date().toDateString());
-    incrementClicks();
+    localStorage.setItem('todayCount', todayCount.toString());
+    localStorage.setItem('totalCount', totalCount.toString());
+    localStorage.setItem('zikirDate', new Date().toDateString());
 }
 
 // Sayaçları güncelleme
@@ -133,7 +146,7 @@ function playZikir() {
     todayCount++;
     totalCount++;
     updateCounters();
-    saveData();
+    incrementClicks();
 
     // Titreşim
     vibrate();
@@ -191,7 +204,8 @@ function showAudioPermissionMessage() {
 
 // Sayfa yüklendiğinde çalışacak fonksiyonlar
 function initializeApp() {
-    loadData();
+    // loadData();
+    fetchClickCounts(); // API'den tıklama sayısını al
 
     // Ses dosyalarının volume ayarları
     backgroundAudio.volume = 0.1;
@@ -484,8 +498,8 @@ async function getTotalClicks() {
     try {
         const response = await fetch(`${API_URL}/clicks/total`);
         const data = await response.json();
-        console.log(`Toplam tıklama sayısı: ${data.count}`);
-        return data.count;
+        console.log(`Toplam tıklama sayısı: ${data.total}`);
+        return data.total;
     } catch (error) {
         console.error('Tıklama sayısı alınamadı:', error);
         return 0;
