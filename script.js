@@ -462,10 +462,10 @@ function showInstallButton() {
             z-index: 1000;
             animation: pulse 2s infinite;
         `;
-        
+
         installButton.addEventListener('click', installPWA);
         document.body.appendChild(installButton);
-        
+
         // 10 saniye sonra gizle
         setTimeout(() => {
             if (installButton && installButton.parentNode) {
@@ -513,7 +513,7 @@ function hideInstallButton() {
 window.addEventListener('appinstalled', (evt) => {
     console.log('PWA başarıyla yüklendi');
     hideInstallButton();
-    
+
     // Teşekkür mesajı göster
     showInstallSuccessMessage();
 });
@@ -605,7 +605,7 @@ window.addEventListener('error', (e) => {
 // Service Worker kaydı (gelecekte offline kullanım için)
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register('sw.js')
             .then(registration => {
                 console.log('SW registered: ', registration);
             })
