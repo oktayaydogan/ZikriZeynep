@@ -435,6 +435,162 @@ function addDynamicStar() {
     }, 2000);
 }
 
+// PWA Install Prompt
+let deferredPrompt;
+let installButton;
+
+// PWA install prompt'u yakalama
+window.addEventListener('beforeinstallprompt', (e) => {
+    console.log('PWA install prompt yakalandı');
+    e.preventDefault();
+    deferredPrompt = e;
+    showInstallButton();
+});
+
+// Install button gösterme
+function showInstallButton() {
+    // Eğer zaten install button yoksa oluştur
+    if (!installButton) {
+        installButton = document.createElement('button');
+        installButton.innerHTML = '📱';
+        installButton.className = 'control-btn install-btn';
+        installButton.title = 'Uygulamayı Yükle';
+        installButton.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        `;
+        
+        installButton.addEventListener('click', installPWA);
+        document.body.appendChild(installButton);
+        
+        // 10 saniye sonra gizle
+        setTimeout(() => {
+            if (installButton && installButton.parentNode) {
+                installButton.style.opacity = '0.6';
+            }
+        }, 10000);
+    }
+}
+
+// PWA yükleme fonksiyonu
+async function installPWA() {
+    if (!deferredPrompt) {
+        console.log('Install prompt mevcut değil');
+        return;
+    }
+
+    // Install prompt'u göster
+    const result = await deferredPrompt.prompt();
+    console.log('Install prompt sonucu:', result);
+
+    if (result.outcome === 'accepted') {
+        console.log('Kullanıcı PWA yüklemeyi kabul etti');
+        hideInstallButton();
+    } else {
+        console.log('Kullanıcı PWA yüklemeyi reddetti');
+    }
+
+    deferredPrompt = null;
+}
+
+// Install button'u gizleme
+function hideInstallButton() {
+    if (installButton && installButton.parentNode) {
+        installButton.style.animation = 'fadeOut 0.5s ease-out forwards';
+        setTimeout(() => {
+            if (installButton && installButton.parentNode) {
+                document.body.removeChild(installButton);
+                installButton = null;
+            }
+        }, 500);
+    }
+}
+
+// PWA yüklendiğinde
+window.addEventListener('appinstalled', (evt) => {
+    console.log('PWA başarıyla yüklendi');
+    hideInstallButton();
+    
+    // Teşekkür mesajı göster
+    showInstallSuccessMessage();
+});
+
+// Install başarı mesajı
+function showInstallSuccessMessage() {
+    const message = document.createElement('div');
+    message.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--primary-green);
+        color: var(--gold);
+        padding: 20px 30px;
+        border-radius: 15px;
+        z-index: 1000;
+        font-size: 16px;
+        text-align: center;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        animation: slideInUp 0.5s ease-out;
+    `;
+    message.innerHTML = `
+        <div style="font-size: 24px; margin-bottom: 10px;">🎉</div>
+        <div>Zikr-i Zeynep ana ekrana eklendi!</div>
+        <div style="font-size: 12px; margin-top: 8px; opacity: 0.8;">Artık offline da kullanabilirsiniz</div>
+    `;
+
+    document.body.appendChild(message);
+
+    setTimeout(() => {
+        message.style.animation = 'fadeOut 0.5s ease-out forwards';
+        setTimeout(() => {
+            if (document.body.contains(message)) {
+                document.body.removeChild(message);
+            }
+        }, 500);
+    }, 3000);
+}
+
+// CSS animasyonları
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+    
+    @keyframes fadeOut {
+        from { opacity: 1; transform: scale(1); }
+        to { opacity: 0; transform: scale(0.8); }
+    }
+    
+    @keyframes slideInUp {
+        from { 
+            opacity: 0; 
+            transform: translate(-50%, -50%) translateY(20px); 
+        }
+        to { 
+            opacity: 1; 
+            transform: translate(-50%, -50%) translateY(0); 
+        }
+    }
+    
+    .install-btn {
+        transition: all 0.3s ease !important;
+    }
+    
+    .install-btn:hover {
+        transform: scale(1.1) !important;
+        background: var(--gold) !important;
+        color: var(--primary-green) !important;
+    }
+`;
+document.head.appendChild(style);
+
 // Uygulama başlatma
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
