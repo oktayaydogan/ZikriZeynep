@@ -17,10 +17,10 @@ const urlsToCache = [
 ];
 
 // Install event - cache kaynaklari
-self.addEventListener('install', function(event) {
+self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(function(cache) {
+      .then(function (cache) {
         console.log('Cache oluşturuldu');
         return cache.addAll(urlsToCache);
       })
@@ -28,10 +28,10 @@ self.addEventListener('install', function(event) {
 });
 
 // Fetch event - cache'den servis et
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function (event) {
   event.respondWith(
     caches.match(event.request)
-      .then(function(response) {
+      .then(function (response) {
         // Cache'de varsa cache'den dön
         if (response) {
           return response;
@@ -39,9 +39,9 @@ self.addEventListener('fetch', function(event) {
 
         // Cache'de yoksa network'ten al
         return fetch(event.request).then(
-          function(response) {
+          function (response) {
             // Geçerli response kontrolü
-            if(!response || response.status !== 200 || response.type !== 'basic') {
+            if (!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
 
@@ -49,7 +49,7 @@ self.addEventListener('fetch', function(event) {
             var responseToCache = response.clone();
 
             caches.open(CACHE_NAME)
-              .then(function(cache) {
+              .then(function (cache) {
                 cache.put(event.request, responseToCache);
               });
 
@@ -57,16 +57,16 @@ self.addEventListener('fetch', function(event) {
           }
         );
       }
-    )
+      )
   );
 });
 
 // Activate event - eski cache'leri temizle
-self.addEventListener('activate', function(event) {
+self.addEventListener('activate', function (event) {
   event.waitUntil(
-    caches.keys().then(function(cacheNames) {
+    caches.keys().then(function (cacheNames) {
       return Promise.all(
-        cacheNames.map(function(cacheName) {
+        cacheNames.map(function (cacheName) {
           if (cacheName !== CACHE_NAME) {
             console.log('Eski cache siliniyor:', cacheName);
             return caches.delete(cacheName);
@@ -78,7 +78,7 @@ self.addEventListener('activate', function(event) {
 });
 
 // Background sync - API calls için
-self.addEventListener('sync', function(event) {
+self.addEventListener('sync', function (event) {
   if (event.tag === 'background-sync') {
     event.waitUntil(doBackgroundSync());
   }
@@ -90,10 +90,10 @@ function doBackgroundSync() {
 }
 
 // Push notifications (gelecek için)
-self.addEventListener('push', function(event) {
+self.addEventListener('push', function (event) {
   if (event.data) {
     const data = event.data.json();
-    
+
     const options = {
       body: data.body,
       icon: '/icon-192.png',
@@ -108,9 +108,9 @@ self.addEventListener('push', function(event) {
 });
 
 // Notification click
-self.addEventListener('notificationclick', function(event) {
+self.addEventListener('notificationclick', function (event) {
   event.notification.close();
-  
+
   event.waitUntil(
     clients.openWindow(event.notification.data)
   );
