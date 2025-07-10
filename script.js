@@ -446,7 +446,7 @@ if ('serviceWorker' in navigator) {
 }
 
 // API URL'ini tanımla
-const API_URL = 'https://zikr-i-zeynep-api.vercel.app/';
+const API_URL = 'https://zikr-i-zeynep-api.vercel.app';
 
 // Bugünün tıklama sayısını getir
 async function getTodayClicks() {
