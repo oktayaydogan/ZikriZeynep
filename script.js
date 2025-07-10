@@ -33,26 +33,29 @@ const clickSound = document.getElementById('clickSound');
 
 // LocalStorage'dan veri yükleme
 function loadData() {
-    const today = new Date().toDateString();
-    const savedDate = localStorage.getItem('zikirDate');
+    // const today = new Date().toDateString();
+    // const savedDate = localStorage.getItem('zikirDate');
 
-    if (savedDate === today) {
-        todayCount = parseInt(localStorage.getItem('todayCount')) || 0;
-    } else {
-        todayCount = 0;
-        localStorage.setItem('zikirDate', today);
-    }
+    // if (savedDate === today) {
+    //     todayCount = parseInt(localStorage.getItem('todayCount')) || 0;
+    // } else {
+    //     todayCount = 0;
+    //     localStorage.setItem('zikirDate', today);
+    // }
 
-    totalCount = parseInt(localStorage.getItem('totalCount')) || 0;
+    // totalCount = parseInt(localStorage.getItem('totalCount')) || 0;
+    totalCount = getTotalClicks() || 0; // API'den toplam tıklama sayısını al
+    todayCount = getTodayClicks() || 0; // API'den bugünün tıklama sayısını al
 
     updateCounters();
 }
 
 // Veri kaydetme
 function saveData() {
-    localStorage.setItem('todayCount', todayCount.toString());
-    localStorage.setItem('totalCount', totalCount.toString());
-    localStorage.setItem('zikirDate', new Date().toDateString());
+    // localStorage.setItem('todayCount', todayCount.toString());
+    // localStorage.setItem('totalCount', totalCount.toString());
+    // localStorage.setItem('zikirDate', new Date().toDateString());
+    incrementClicks();
 }
 
 // Sayaçları güncelleme
@@ -191,7 +194,7 @@ function initializeApp() {
     loadData();
 
     // Ses dosyalarının volume ayarları
-    backgroundAudio.volume = 0.3;
+    backgroundAudio.volume = 0.1;
     zikirSounds.forEach(sound => {
         if (sound) {
             sound.volume = 0.7;
@@ -440,4 +443,51 @@ if ('serviceWorker' in navigator) {
                 console.log('SW registration failed: ', registrationError);
             });
     });
+}
+
+// API URL'ini tanımla
+const API_URL = 'http://localhost:3000';
+
+// Bugünün tıklama sayısını getir
+async function getTodayClicks() {
+    try {
+        const response = await fetch(`${API_URL}/clicks/today`);
+        const data = await response.json();
+        console.log(`Bugünün tıklama sayısı: ${data.count}`);
+        return data.count;
+    } catch (error) {
+        console.error('Tıklama sayısı alınamadı:', error);
+        return 0;
+    }
+}
+
+// Tıklama sayısını artır
+async function incrementClicks() {
+    try {
+        const response = await fetch(`${API_URL}/clicks/increment`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await response.json();
+        console.log(`Yeni tıklama sayısı: ${data.count}`);
+        return data.count;
+    } catch (error) {
+        console.error('Tıklama artırılamadı:', error);
+        return null;
+    }
+}
+
+// Belirli tarihin tıklama sayısını getir
+async function getTotalClicks() {
+    try {
+        const response = await fetch(`${API_URL}/clicks/total`);
+        const data = await response.json();
+        console.log(`Toplam tıklama sayısı: ${data.count}`);
+        return data.count;
+    } catch (error) {
+        console.error('Tıklama sayısı alınamadı:', error);
+        return 0;
+    }
 }
